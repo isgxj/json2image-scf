@@ -1,0 +1,11 @@
+.DS_Store
+.idea
+
+# 第三方依赖
+node_modules/
+
+/test/
+.env
+yarn.lock
+yarn-error.log
+package-lock.json

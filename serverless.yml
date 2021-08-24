@@ -1,0 +1,35 @@
+app: scf-nodejs-dev-slsj2img
+component: scf
+inputs:
+  description: This is a function in slsj2img application
+  eip: false
+  enableRoleAuth: true
+  events:
+    - apigw:
+        name: scfjson2image
+        parameters:
+          endpoints:
+            - function:
+                functionQualifier: $DEFAULT
+                isIntegratedResponse: true
+              method: ANY
+              path: /scf-nodejs-dev-slsj2img
+          environment: release
+          protocols:
+            - http
+            - https
+          serviceId: service-cn010hwu
+  handler: index.main_handler
+  memorySize: 128
+  name: scf-nodejs-dev-slsj2img
+  namespace: default
+  publicAccess: true
+  region: ap-guangzhou
+  runtime: Nodejs12.16
+  src: ./src
+  timeout: 3
+name: ap-guangzhou_default_scf-nodejs-dev-slsj2img
+org: '1251208590'
+stage: dev
+# When using this configuration file for deployment, make sure the file name is "serverless.yml".
+# For more information: https://github.com/serverless-components/tencent-scf/blob/master/docs/configure.md

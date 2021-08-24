@@ -1,0 +1,13 @@
+{
+  "name": "json2image-node",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "ixgxj",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "2.6.1",
+    "json2image": "^0.1.2"
+  }
+}
