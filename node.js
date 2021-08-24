@@ -1,4 +1,4 @@
-const json2image = require('./json2image');
+const json2image = require('json2image');
 const { createCanvas, Image, registerFont } = require('canvas');
 
 // registerFont('./font/PingFang.ttf', { family: 'PingFang SC' });

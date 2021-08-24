@@ -9,7 +9,6 @@ exports.main_handler = (event, context, callback) => {
   } else {
     data = JSON.parse(body);
   }
-  data = json2image.decodeKeys(data);
 
   const imageType = data.output || 'jpeg';
 

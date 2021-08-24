@@ -1,70 +1,56 @@
-# 快速构建 scf-nodejs
+# json2image-scf  
 
-**中文** | [English](./README_EN.md)
+jsonimage在node后端使用，示例为[腾讯云函数](https://cloud.tencent.com/document/product/583)
 
-## 简介
-
-scf-nodejs 模板使用 Tencent SCF 组件及其触发器能力，方便的在腾讯云创建，配置和管理一个 scf-nodejs 应用。
-
-## 快速开始
-
-### 1. 安装
-
-```bash
-# 安装 Serverless Framework
-npm install -g serverless
-```
-
-### 2. 创建
-
-通过如下命令直接下载该例子：
-
-```bash
-serverless init scf-nodejs --name example
-cd example
-```
-
-### 3. 部署
-
-在 `serverless.yml` 文件所在的项目根目录，运行以下指令，将会弹出二维码，直接扫码授权进行部署：
-
-```bash
-serverless deploy
-```
-
-> **说明**：如果鉴权失败，请参考 [权限配置](https://cloud.tencent.com/document/product/1154/43006) 进行授权。
-
-### 4. 查看状态
-
-执行以下命令，查看您部署的项目信息：
-
-```bash
-serverless info
-```
-
-### 5. 移除
-
-可以通过以下命令移除 scf-nodejs 应用
-
-```bash
-serverless remove
-```
-
-### 账号配置（可选）
-
-serverless 默认支持扫描二维码登录，用户扫描二维码后会自动生成一个 `.env` 文件并将密钥存入其中.
-如您希望配置持久的环境变量/秘钥信息，也可以本地创建 `.env` 文件, 
-把从[API 密钥管理](https://console.cloud.tencent.com/cam/capi)中获取的 `SecretId` 和`SecretKey` 填入其中.
-
-> 如果没有腾讯云账号，可以在此[注册新账号](https://cloud.tencent.com/register)。
-
-```bash
-# 腾讯云的配置信息
-touch .env
-```
+## 安装  
 
 ```
-# .env file
-TENCENT_SECRET_ID=123
-TENCENT_SECRET_KEY=123
+npm i -S json2image canvas
+or
+yarn add -S json2image canvas
+```
+
+## 注意
+1、canvas需要在安装时编译二进制代码，不同操作系统有区别，如果部署失败，需要关闭自动安装依赖，在腾讯云函数控制台，手动重新运行 cnpm i 安装依赖  
+2、腾讯云函数服务器需要使用canvas@2.6.1版本  
+
+
+## 调用示例
+<a href="https://sls-layer-ap-guangzhou-code-1251208590.cos-website.ap-guangzhou.myqcloud.com/json2image/" target="_blank">demo</a>  
+
+
+## 前端使用
+get请求对url长度有限制，ie9及以上，chrome对url的限制都是8000左右。  
+如果对json编码后超过8000，需要使用post请求，获取base64设置给img标签
+
+```js
+
+var imgEl = document.getElementById('imgEl');
+var scfUrl = 'https://scf-test.com/release/json2image';
+const data = {/*...数据格式和前端使用相同*/};
+var src = scfurl + '?data=' + encodeURIComponent(JSON.stringify(data));
+imgEl.src = src;
+
+```
+
+## 后台部署  
+
+```js
+
+const json2image = require('./json2image');
+const { createCanvas, Image, registerFont } = require('canvas');
+
+// 导入字体
+registerFont('./font/PingFang.ttf', { family: 'PingFang SC' });
+
+// 覆盖两个前端对象
+global.document = {
+  createElement: createCanvas,
+};
+global.Image = Image;
+
+// 接收到前端data，转换为js对象
+const data = {/*...数据格式和前端使用相同*/};
+json2image(data, url => console.log(url), url => console.log(url));
+
 ```

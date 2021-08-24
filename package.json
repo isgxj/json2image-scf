@@ -8,6 +8,6 @@
   "license": "ISC",
   "dependencies": {
     "canvas": "2.6.1",
-    "json2image": "^0.1.2"
+    "json2image": "^0.1.3"
   }
 }
